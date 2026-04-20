@@ -1,0 +1,10 @@
+B001|Introduction to Algorithms|Thomas H. Cormen|Computer Science|5
+B002|Database System Concepts|Abraham Silberschatz|Database|4
+B003|Software Engineering|Ian Sommerville|Software|6
+B004|Clean Code|Robert C. Martin|Programming|3
+B005|Computer Networks|Andrew S. Tanenbaum|Networking|4
+B006|Artificial Intelligence: A Modern Approach|Stuart Russell|AI|2
+B007|Operating System Concepts|Abraham Silberschatz|Operating System|5
+B008|The Pragmatic Programmer|Andrew Hunt|Programming|3
+B009|Data Structures and Algorithms in Java|Michael T. Goodrich|Programming|4
+B010|Discrete Mathematics and Its Applications|Kenneth Rosen|Mathematics|7

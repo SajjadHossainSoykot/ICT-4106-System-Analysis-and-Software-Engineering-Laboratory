@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Library Management System</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="hero">
+    <div class="overlay"></div>
+    <div class="hero-content">
+      <h1>Library Management System</h1>
+      <p>Offline-friendly smart portal for books, quantity tracking, issue, return, and fines</p>
+      <a href="#catalog" class="btn">Explore Books</a>
+    </div>
+  </header>
+
+  <nav class="navbar">
+    <div class="logo">LMS Portal</div>
+    <ul>
+      <li><a href="#catalog">Catalog</a></li>
+      <li><a href="#issue">Issue Book</a></li>
+      <li><a href="#return">Return Book</a></li>
+      <li><a href="#records">Issued Records</a></li>
+      <li><a href="#backup">Backup</a></li>
+    </ul>
+  </nav>
+
+  <main class="container">
+    <section class="card intro">
+      <h2>Welcome</h2>
+      <p>
+        This Library Management System supports book search, quantity tracking,
+        issue and return operation, overdue fine calculation, and backup of issued data
+        using a text file.
+      </p>
+    </section>
+
+    <section class="stats-grid">
+      <div class="stat-card">
+        <h3 id="totalTitles">0</h3>
+        <p>Total Titles</p>
+      </div>
+      <div class="stat-card">
+        <h3 id="totalBooks">0</h3>
+        <p>Total Book Copies</p>
+      </div>
+      <div class="stat-card">
+        <h3 id="issuedCount">0</h3>
+        <p>Currently Issued</p>
+      </div>
+      <div class="stat-card">
+        <h3 id="availableCount">0</h3>
+        <p>Currently Available</p>
+      </div>
+    </section>
+
+    <section id="catalog" class="card">
+      <div class="section-head">
+        <h2>Book Catalog</h2>
+        <input type="text" id="searchInput" placeholder="Search by title, author, category, or book ID..." />
+      </div>
+      <div id="bookList" class="book-grid"></div>
+    </section>
+
+    <section id="issue" class="card form-section">
+      <h2>Issue Book</h2>
+      <form id="issueForm">
+        <div class="form-grid">
+          <input type="text" id="memberName" placeholder="Member Name" required />
+          <input type="text" id="memberId" placeholder="Member ID" required />
+          <input type="text" id="issueBookId" placeholder="Book ID" required />
+          <input type="date" id="issueDate" required />
+          <input type="date" id="dueDate" required />
+        </div>
+        <button type="submit" class="btn">Issue Book</button>
+      </form>
+      <p id="issueMsg" class="message"></p>
+    </section>
+
+    <section id="return" class="card form-section">
+      <h2>Return Book</h2>
+      <form id="returnForm">
+        <div class="form-grid">
+          <input type="text" id="returnMemberId" placeholder="Member ID" required />
+          <input type="text" id="returnBookId" placeholder="Book ID" required />
+          <input type="date" id="returnDate" required />
+        </div>
+        <button type="submit" class="btn danger">Return Book</button>
+      </form>
+      <p id="returnMsg" class="message"></p>
+    </section>
+
+    <section id="records" class="card">
+      <div class="section-head">
+        <h2>Issued Records</h2>
+        <button id="clearAllBtn" class="btn small danger">Clear All</button>
+      </div>
+      <div id="recordList" class="record-list"></div>
+    </section>
+
+    <section id="backup" class="card">
+      <h2>Issued Data Backup</h2>
+      <p class="backup-note">
+        Since browser-only frontend cannot directly save into a permanent <code>issued.txt</code>,
+        use the buttons below to export and import issued records as a text file.
+      </p>
+
+      <div class="backup-actions">
+        <button id="downloadIssuedBtn" class="btn">Download Issued TXT</button>
+        <label for="uploadIssuedFile" class="btn secondary">Import Issued TXT</label>
+        <input type="file" id="uploadIssuedFile" accept=".txt" hidden />
+      </div>
+
+      <div class="sample-box">
+        <h3>Export Format</h3>
+        <p>Each line will be saved like this:</p>
+        <code>memberName|memberId|bookId|issueDate|dueDate|status|returnDate|fine</code>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 Library Management System | Offline Demo Portal</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
