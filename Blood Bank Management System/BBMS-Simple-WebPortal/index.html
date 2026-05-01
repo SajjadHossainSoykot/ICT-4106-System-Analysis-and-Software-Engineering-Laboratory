@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Blood Bank Management System</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="hero">
+  <h1>Blood Bank Management System</h1>
+  <p>Offline Portal with TXT Data Backup</p>
+</header>
+
+<nav>
+  <a href="#donor">Donor</a>
+  <a href="#donate">Donate</a>
+  <a href="#request">Request</a>
+  <a href="#stock">Stock</a>
+  <a href="#history">History</a>
+</nav>
+
+<div class="container">
+
+<section id="donor" class="card">
+  <h2>Register Donor</h2>
+  <form id="donorForm">
+    <input type="text" id="dname" placeholder="Donor Name" required>
+    <input type="text" id="dblood" placeholder="Blood Group" required>
+    <input type="text" id="dphone" placeholder="Phone" required>
+    <button type="submit">Register Donor</button>
+  </form>
+</section>
+
+<section id="donate" class="card">
+  <h2>Donate Blood</h2>
+  <form id="donateForm">
+    <input type="text" id="donorName" placeholder="Donor Name" required>
+    <input type="text" id="bloodGroup" placeholder="Blood Group" required>
+    <input type="number" id="units" placeholder="Units" required>
+    <button type="submit">Donate</button>
+  </form>
+</section>
+
+<section id="request" class="card">
+  <h2>Request Blood</h2>
+  <form id="requestForm">
+    <input type="text" id="rname" placeholder="Recipient / Patient Name" required>
+    <input type="text" id="rblood" placeholder="Required Blood Group" required>
+    <input type="number" id="runits" placeholder="Units" required>
+    <button type="submit">Request Blood</button>
+  </form>
+</section>
+
+<section id="stock" class="card">
+  <h2>Blood Stock</h2>
+  <div id="stockList"></div>
+</section>
+
+<section id="history" class="card">
+  <div class="section-title">
+    <h2>Request History</h2>
+    <button onclick="clearRequests()" class="danger-btn">Clear Requests</button>
+  </div>
+
+  <div class="backup-buttons">
+    <button onclick="downloadRequests()">Download requests.txt</button>
+    <label class="upload-btn">
+      Import requests.txt
+      <input type="file" id="uploadRequests" accept=".txt" hidden>
+    </label>
+  </div>
+
+  <div id="requestList"></div>
+</section>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
