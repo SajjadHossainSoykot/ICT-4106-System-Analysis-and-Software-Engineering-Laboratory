@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Hospital Management System</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="hero">
+  <h1>Hospital Management System</h1>
+  <p>Simple Offline Portal</p>
+</header>
+
+<nav>
+  <a href="#patients">Patient</a>
+  <a href="#doctors">Doctors</a>
+  <a href="#appointment">Appointment</a>
+  <a href="#records">Records</a>
+</nav>
+
+<div class="container">
+
+<!-- PATIENT -->
+<section id="patients" class="card">
+  <h2>Register Patient</h2>
+  <form id="patientForm">
+    <input type="text" id="pname" placeholder="Name" required>
+    <input type="number" id="page" placeholder="Age" required>
+    <input type="text" id="pphone" placeholder="Phone" required>
+    <button type="submit">Add Patient</button>
+  </form>
+</section>
+
+<!-- DOCTORS -->
+<section id="doctors" class="card">
+  <h2>Doctors</h2>
+  <div id="doctorList"></div>
+</section>
+
+<!-- APPOINTMENT -->
+<section id="appointment" class="card">
+  <h2>Book Appointment</h2>
+  <form id="appointmentForm">
+    <input type="text" id="patientId" placeholder="Patient Name" required>
+    <input type="text" id="doctorId" placeholder="Doctor ID" required>
+    <input type="date" id="date" required>
+    <button type="submit">Book</button>
+  </form>
+</section>
+
+<!-- RECORDS -->
+<section id="records" class="card">
+  <div class="section-title">
+    <h2>Appointments</h2>
+    <button onclick="clearAllAppointments()" class="danger-btn">Clear All</button>
+  </div>
+  <div id="recordsList"></div>
+</section>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
