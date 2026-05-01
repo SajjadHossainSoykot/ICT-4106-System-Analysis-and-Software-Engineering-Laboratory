@@ -1,0 +1,100 @@
+body {
+  font-family: Arial;
+  background: #f4f7fb;
+  margin: 0;
+}
+
+.hero {
+  background: linear-gradient(135deg, #1e3a8a, #2563eb);
+  color: white;
+  text-align: center;
+  padding: 25px;
+}
+
+nav {
+  background: white;
+  padding: 12px;
+  text-align: center;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+}
+
+nav a {
+  margin: 10px;
+  text-decoration: none;
+  color: #1d4ed8;
+  font-weight: bold;
+}
+
+.container {
+  width: 85%;
+  margin: auto;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  margin: 20px 0;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+input {
+  display: block;
+  margin: 10px 0;
+  padding: 11px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+button,
+.upload-btn {
+  padding: 10px 14px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+button:hover,
+.upload-btn:hover {
+  background: #1d4ed8;
+}
+
+.report-card {
+  border-left: 5px solid #2563eb;
+}
+
+.good {
+  color: green;
+  font-weight: bold;
+}
+
+.average {
+  color: orange;
+  font-weight: bold;
+}
+
+.fail {
+  color: red;
+  font-weight: bold;
+}
+
+.section-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.danger-btn {
+  background: #dc2626;
+}
+
+.danger-btn:hover {
+  background: #b91c1c;
+}
+
+.backup-buttons {
+  margin-bottom: 15px;
+}

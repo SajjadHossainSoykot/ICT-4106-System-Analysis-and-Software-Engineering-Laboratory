@@ -1,0 +1,2 @@
+2018040|Rahim Ahmed|ICT|CSE101|Introduction to Programming|3|85|A+|4|4.00
+2018040|Rahim Ahmed|ICT|ICT4106|System Analysis Lab|1.5|78|A|3.75|3.92

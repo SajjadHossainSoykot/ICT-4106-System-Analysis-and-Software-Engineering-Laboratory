@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Student Information System</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="hero">
+  <h1>Student Information System</h1>
+  <p>Offline Portal with GPA Calculation</p>
+</header>
+
+<nav>
+  <a href="#student">Student</a>
+  <a href="#courses">Courses</a>
+  <a href="#marksSection">Marks</a>
+  <a href="#evaluation">Evaluation</a>
+  <a href="#reports">Reports</a>
+</nav>
+
+<div class="container">
+
+<section id="student" class="card">
+  <h2>Register Student</h2>
+  <form id="studentForm">
+    <input type="text" id="sname" placeholder="Student Name" required>
+    <input type="text" id="sid" placeholder="Student ID" required>
+    <input type="text" id="dept" placeholder="Department" required>
+    <button type="submit">Register Student</button>
+  </form>
+</section>
+
+<section id="courses" class="card">
+  <h2>Course List</h2>
+  <div id="courseList"></div>
+</section>
+
+<section id="marksSection" class="card">
+  <h2>Submit Marks</h2>
+  <form id="marksForm">
+    <input type="text" id="markStudentId" placeholder="Student ID" required>
+    <input type="text" id="courseId" placeholder="Course ID" required>
+    <input type="number" id="marks" placeholder="Marks" required>
+    <button type="submit">Submit Marks</button>
+  </form>
+</section>
+
+<section id="evaluation" class="card">
+  <h2>Teacher Evaluation</h2>
+  <form id="evaluationForm">
+    <input type="text" id="evalStudentId" placeholder="Student ID" required>
+    <input type="text" id="teacherName" placeholder="Teacher Name" required>
+    <input type="number" id="rating" placeholder="Rating 1-5" min="1" max="5" required>
+    <button type="submit">Submit Evaluation</button>
+  </form>
+</section>
+
+<section id="reports" class="card">
+  <div class="section-title">
+    <h2>Student Reports</h2>
+    <button onclick="clearReports()" class="danger-btn">Clear Reports</button>
+  </div>
+
+  <div id="reportList"></div>
+</section>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

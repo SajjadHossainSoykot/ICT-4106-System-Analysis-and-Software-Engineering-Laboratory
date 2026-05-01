@@ -1,0 +1,7 @@
+ICT101|Introduction to Programming|3
+ICT102|Data Structures|3
+ICT201|Database Management System|3
+ICT202|Software Engineering|3
+ICT301|Computer Networks|3
+ICT302|Operating System|3
+ICT4106|System Analysis Lab|1.5
