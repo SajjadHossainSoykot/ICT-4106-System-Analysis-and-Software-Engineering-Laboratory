@@ -1,10 +1,28 @@
 const stockList = document.getElementById("stockList");
 const requestList = document.getElementById("requestList");
-const uploadRequests = document.getElementById("uploadRequests");
+
+// Default blood stock
+const defaultStock = {
+  "A+": 5,
+  "A-": 3,
+  "B+": 4,
+  "B-": 2,
+  "O+": 6,
+  "O-": 2,
+  "AB+": 3,
+  "AB-": 1
+};
 
 // ---------- STORAGE ----------
 function getStock() {
-  return JSON.parse(localStorage.getItem("bloodStock")) || {};
+  let stock = localStorage.getItem("bloodStock");
+
+  if (stock) {
+    return JSON.parse(stock);
+  } else {
+    localStorage.setItem("bloodStock", JSON.stringify(defaultStock));
+    return defaultStock;
+  }
 }
 
 function saveStock(stock) {
@@ -27,34 +45,8 @@ function saveDonors(donors) {
   localStorage.setItem("donors", JSON.stringify(donors));
 }
 
-// ---------- LOAD STOCK.TXT ----------
-async function loadStockFromTxt() {
-  if (localStorage.getItem("bloodStock")) {
-    renderStock();
-    renderRequests();
-    return;
-  }
-
-  try {
-    const res = await fetch("stock.txt");
-    const text = await res.text();
-
-    const stock = {};
-
-    text.trim().split("\n").forEach(line => {
-      const [group, quantity] = line.split("|");
-      stock[group.trim()] = parseInt(quantity.trim());
-    });
-
-    saveStock(stock);
-    renderStock();
-  } catch {
-    stockList.innerHTML = "<p class='low'>Could not load stock.txt</p>";
-  }
-}
-
 // ---------- REGISTER DONOR ----------
-document.getElementById("donorForm").addEventListener("submit", e => {
+document.getElementById("donorForm").addEventListener("submit", function(e) {
   e.preventDefault();
 
   const name = document.getElementById("dname").value;
@@ -64,9 +56,9 @@ document.getElementById("donorForm").addEventListener("submit", e => {
   const donors = getDonors();
 
   donors.push({
-    name,
-    blood,
-    phone,
+    name: name,
+    blood: blood,
+    phone: phone,
     date: new Date().toLocaleDateString()
   });
 
@@ -77,24 +69,25 @@ document.getElementById("donorForm").addEventListener("submit", e => {
 });
 
 // ---------- DONATE BLOOD ----------
-document.getElementById("donateForm").addEventListener("submit", e => {
+document.getElementById("donateForm").addEventListener("submit", function(e) {
   e.preventDefault();
 
   const group = document.getElementById("bloodGroup").value.toUpperCase();
   const units = parseInt(document.getElementById("units").value);
 
   const stock = getStock();
+
   stock[group] = (stock[group] || 0) + units;
 
   saveStock(stock);
   renderStock();
 
-  alert("Blood donation added to stock.");
+  alert("Blood added to stock.");
   e.target.reset();
 });
 
 // ---------- REQUEST BLOOD ----------
-document.getElementById("requestForm").addEventListener("submit", e => {
+document.getElementById("requestForm").addEventListener("submit", function(e) {
   e.preventDefault();
 
   const patient = document.getElementById("rname").value;
@@ -107,17 +100,17 @@ document.getElementById("requestForm").addEventListener("submit", e => {
   let status = "Rejected";
 
   if (stock[group] && stock[group] >= units) {
-    stock[group] -= units;
+    stock[group] = stock[group] - units;
     status = "Issued";
     saveStock(stock);
   }
 
   requests.push({
-    patient,
-    group,
-    units,
+    patient: patient,
+    group: group,
+    units: units,
     date: new Date().toLocaleDateString(),
-    status
+    status: status
   });
 
   saveRequests(requests);
@@ -127,48 +120,54 @@ document.getElementById("requestForm").addEventListener("submit", e => {
   if (status === "Issued") {
     alert("Blood issued successfully.");
   } else {
-    alert("Not enough blood available. Request rejected.");
+    alert("Not enough blood. Request rejected.");
   }
 
   e.target.reset();
 });
 
-// ---------- RENDER STOCK ----------
+// ---------- SHOW STOCK ----------
 function renderStock() {
   const stock = getStock();
 
-  if (Object.keys(stock).length === 0) {
-    stockList.innerHTML = "<p>No stock available.</p>";
-    return;
-  }
+  stockList.innerHTML = "";
 
-  stockList.innerHTML = Object.entries(stock).map(([group, qty]) => {
-    const alertText = qty <= 2 ? "LOW STOCK ALERT" : "Available";
-    const className = qty <= 2 ? "low" : "safe";
+  for (let group in stock) {
+    let qty = stock[group];
 
-    return `
+    let statusText = "Available";
+    let statusClass = "safe";
+
+    if (qty <= 2) {
+      statusText = "Low Stock Alert";
+      statusClass = "low";
+    }
+
+    stockList.innerHTML += `
       <div class="card stock-card">
         <p><b>Blood Group:</b> ${group}</p>
         <p><b>Quantity:</b> ${qty} units</p>
-        <p><b>Status:</b> <span class="${className}">${alertText}</span></p>
+        <p><b>Status:</b> <span class="${statusClass}">${statusText}</span></p>
       </div>
     `;
-  }).join("");
+  }
 }
 
-// ---------- RENDER REQUESTS ----------
+// ---------- SHOW REQUEST HISTORY ----------
 function renderRequests() {
   const requests = getRequests();
 
   if (requests.length === 0) {
-    requestList.innerHTML = "<p>No blood requests yet.</p>";
+    requestList.innerHTML = "<p>No request history available.</p>";
     return;
   }
 
-  requestList.innerHTML = requests.map(req => {
-    const cls = req.status === "Issued" ? "issued" : "rejected";
+  requestList.innerHTML = "";
 
-    return `
+  requests.forEach(function(req) {
+    let cls = req.status === "Issued" ? "issued" : "rejected";
+
+    requestList.innerHTML += `
       <div class="card">
         <p><b>Patient:</b> ${req.patient}</p>
         <p><b>Blood Group:</b> ${req.group}</p>
@@ -177,82 +176,27 @@ function renderRequests() {
         <p><b>Status:</b> <span class="${cls}">${req.status}</span></p>
       </div>
     `;
-  }).join("");
+  });
 }
 
-// ---------- DOWNLOAD REQUESTS.TXT ----------
-function downloadRequests() {
-  const requests = getRequests();
-
-  if (requests.length === 0) {
-    alert("No requests to download.");
-    return;
-  }
-
-  const content = requests.map(req => {
-    return [
-      req.patient,
-      req.group,
-      req.units,
-      req.date,
-      req.status
-    ].join("|");
-  }).join("\n");
-
-  const blob = new Blob([content], { type: "text/plain" });
-  const url = URL.createObjectURL(blob);
-
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "requests.txt";
-  a.click();
-
-  URL.revokeObjectURL(url);
-}
-
-// ---------- IMPORT REQUESTS.TXT ----------
-uploadRequests.addEventListener("change", e => {
-  const file = e.target.files[0];
-  if (!file) return;
-
-  const reader = new FileReader();
-
-  reader.onload = function(event) {
-    const text = event.target.result.trim();
-
-    if (!text) {
-      alert("File is empty.");
-      return;
-    }
-
-    const requests = text.split("\n").map(line => {
-      const [patient, group, units, date, status] = line.split("|");
-
-      return {
-        patient: patient.trim(),
-        group: group.trim(),
-        units: parseInt(units.trim()),
-        date: date.trim(),
-        status: status.trim()
-      };
-    });
-
-    saveRequests(requests);
-    renderRequests();
-
-    alert("requests.txt imported successfully.");
-  };
-
-  reader.readAsText(file);
-});
-
-// ---------- CLEAR REQUESTS ----------
+// ---------- CLEAR REQUEST HISTORY ----------
 function clearRequests() {
-  if (confirm("Clear all request records?")) {
-    localStorage.removeItem("bloodRequests");
-    renderRequests();
-  }
+  localStorage.removeItem("bloodRequests");
+  renderRequests();
+  alert("Request history cleared.");
 }
 
-loadStockFromTxt();
+function clearAllData() {
+  localStorage.setItem("bloodStock", JSON.stringify(defaultStock));
+  localStorage.removeItem("bloodRequests");
+  localStorage.removeItem("donors");
+
+  renderStock();
+  renderRequests();
+
+  alert("All data reset successfully.");
+}
+
+// ---------- INITIAL LOAD ----------
+renderStock();
 renderRequests();

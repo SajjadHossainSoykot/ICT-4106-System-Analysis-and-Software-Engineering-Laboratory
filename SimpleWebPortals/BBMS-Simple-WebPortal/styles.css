@@ -4,24 +4,24 @@ body {
   margin: 0;
 }
 
-.hero {
-  background: linear-gradient(135deg, #991b1b, #dc2626);
+header {
+  background: #dc2626;
   color: white;
-  padding: 25px;
   text-align: center;
+  padding: 25px;
 }
 
 nav {
   background: white;
-  padding: 12px;
   text-align: center;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+  padding: 12px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
 }
 
 nav a {
   margin: 10px;
-  text-decoration: none;
   color: #dc2626;
+  text-decoration: none;
   font-weight: bold;
 }
 
@@ -34,32 +34,29 @@ nav a {
   background: white;
   padding: 20px;
   margin: 20px 0;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
 }
 
 input {
   display: block;
-  margin: 10px 0;
-  padding: 11px;
   width: 100%;
+  padding: 11px;
+  margin: 10px 0;
   box-sizing: border-box;
 }
 
-button,
-.upload-btn {
-  padding: 10px 14px;
+button {
   background: #dc2626;
   color: white;
   border: none;
-  border-radius: 6px;
+  padding: 10px 14px;
+  border-radius: 5px;
   cursor: pointer;
-  display: inline-block;
 }
 
-button:hover,
-.upload-btn:hover {
-  background: #b91c1c;
+button:hover {
+  background: #1c60b9;
 }
 
 .stock-card {
@@ -67,17 +64,12 @@ button:hover,
 }
 
 .low {
-  color: #dc2626;
+  color: red;
   font-weight: bold;
 }
 
 .safe {
   color: green;
-  font-weight: bold;
-}
-
-.pending {
-  color: orange;
   font-weight: bold;
 }
 
@@ -99,8 +91,4 @@ button:hover,
 
 .danger-btn {
   background: #7f1d1d;
-}
-
-.backup-buttons {
-  margin-bottom: 15px;
 }
